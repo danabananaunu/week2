@@ -40,11 +40,15 @@
                 <td>Webmaster</td>
                 <td>example1@email.com</td>
                 <td>X</td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td>User123</td>
                 <td>example2@email.com</td>
                 <td>-</td>
+                <td></td>
+                <td></td>
             </tr>
         </tbody>
     </table>
@@ -117,6 +121,7 @@
             });
             
             function displayImage(cell, file) {
+            if (file instanceof Blob) { // Ensure the file is a valid Blob
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const img = document.createElement('img');
@@ -125,7 +130,11 @@
                     cell.appendChild(img);
                 };
                 reader.readAsDataURL(file);
+            } else {
+                cell.innerHTML = ''; // Clear the cell if the file is not valid
             }
+        }
+
             
             emptyBtn.addEventListener('click', function() {
                 table.innerHTML = ''; 
